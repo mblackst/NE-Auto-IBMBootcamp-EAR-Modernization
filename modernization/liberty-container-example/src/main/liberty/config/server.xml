@@ -1,0 +1,13 @@
+<server description="Liberty Hello World Servlet Server">
+
+    <featureManager>
+        <feature>servlet-3.1</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+    <webApplication location="HelloWorldServlet.war" contextRoot="/HelloWorldServlet" />
+</server>

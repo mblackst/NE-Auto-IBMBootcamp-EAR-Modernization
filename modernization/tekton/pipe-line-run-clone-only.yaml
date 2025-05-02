@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: liberty-clone-only-run
+spec:
+  pipelineRef:
+    name: liberty-clone-only-pipeline
+  workspaces:
+    - name: shared-data
+      emptyDir: {}
+

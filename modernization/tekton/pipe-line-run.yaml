@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: liberty-ci-cd-pipelinerun
+spec:
+  pipelineRef:
+    name: liberty-ci-cd-pipeline
+  workspaces:
+    - name: shared-data
+      emptyDir: {}
+

@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: liberty-clone-only-pipeline
+spec:
+  workspaces:
+    - name: shared-data
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-data
+      params:
+        - name: url
+          value: "https://github.com/mblackst/NE-Auto-IBMBootcamp-EAR-Modernization.git"
+        - name: revision
+          value: "main"
+        - name: subdirectory
+          value: "modernization/liberty-container-example"
+

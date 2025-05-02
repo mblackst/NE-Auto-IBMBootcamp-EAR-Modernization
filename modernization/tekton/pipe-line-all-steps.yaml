@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: liberty-ci-cd-pipeline
+spec:
+  workspaces:
+    - name: shared-data
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-data
+      params:
+        - name: url
+          value: "https://github.com/mblackst/NE-Auto-IBMBootcamp-EAR-Modernization.git"
+        - name: revision
+          value: "main"
+
+    - name: build-image
+      runAfter: ["clone-repo"]
+      taskRef:
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: shared-data
+      params:
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/$(context.pipelineRun.namespace)/liberty-app:latest
+        - name: STORAGE_DRIVER
+          value: vfs
+        - name: CONTEXT
+          value: NE-Auto-IBMBootcamp-EAR-Modernization/modernization/liberty-container-example
+        - name: DOCKERFILE
+          value: NE-Auto-IBMBootcamp-EAR-Modernization/modernization/liberty-container-example/Dockerfile
+
